@@ -312,4 +312,67 @@
 
   https://www.jianshu.com/p/44bde59393e6
   
+  ```ruby
+  class Dog
+      # 定义方法要在 alias_method 之前 否则会报找不到方法
+      def full_name
+          @name
+      end
+  
+      alias_method :dog_name, :full_name
+  
+      def initialize
+          @name = "Mr.黄先生"
+      end
+  
+  end
+  
+  dog = Dog.new
+  puts dog.dog_name
+  ```
+  
+- ||= 符号
+
+  ```ruby
+  a ||= b => (a || a = b)
+  # 也就是 如果 a如果等于nil 则把b的值赋给a；否则 a不变
+  ```
+  
+- 类也是对象
+
+  ```ruby
+  # 类也是对象
+  class Dog
+  
+  end
+  
+  class Cat 
+  
+  end
+  
+  animals = [Dog, Cat]
+  ```
+  
+- The Inherited Hook Method
+
+  ```ruby
+  class Animal
+      # 当该类被继承时 就会触发 #inherited方法的调用
+      def self.inherited(subclass)
+          puts "#{subclass} inherits from parent"
+      end
+      
+  end
+  
+  class Dog < Animal
+  
+  end
+  
+  class Cat < Animal
+  
+  end
+  # Dog inherits from parent
+  # Cat inherits from parent
+  ```
+  
   
