@@ -1195,3 +1195,15 @@ fragColor = texture(iChannel0,uv * 0.5 + 0.5);
 
 
 
+滤镜链接: https://www.codersrc.com/opengl-gpuimage
+
+坚持每天写笔记，并提交到github上
+
+1.完成GPUImage滤镜分析blog
+
+2.学习Ruby/Shell 脚本
+
+3.学习MySql语句
+
+4.RN的学习(王红元)
+
