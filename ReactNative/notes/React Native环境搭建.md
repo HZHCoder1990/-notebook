@@ -122,13 +122,20 @@ pod install
   ```ruby
   # 使用iOS模拟器运行工程
   yarn ios
-# 使用Android模拟器运行工程
-  yarn android
-```
-  
-  
-  
+
+​       使用Android模拟器运行工程
+
+         ```ruby
+           yarn android
+         ```
+
+
+
+- 添加三方依赖
+
+  ```ruby
+  yarn add 三方依赖的名称
+  ```
 
   
-
 
