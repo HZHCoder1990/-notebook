@@ -72,3 +72,25 @@ git push origin master
 
 
 
+
+
+- 创建React Native 工程时指定使用TypeScript
+
+  ```shell
+  npx react-native init MyApp --template react-native-template-typescript
+  ```
+
+  如果出现错误，使用下列命令
+
+  > 1.删除旧版本 react-native-cli
+  >
+  > npm uninstall -g react-native-cli
+  >
+  > 2.重新安装
+  >
+  > npm i -g @react-native-community/cli
+  >
+  > 3.重新初始化项目即可
+  >
+  > npx react-native init MyApp --template react-native-template-typescript
+
