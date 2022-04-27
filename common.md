@@ -72,7 +72,17 @@ git push origin master
 
 
 
+- 使用RN 模板创建TypeScript工程报错的解决办法
 
-
-gamma 校验: https://learnopengl.com/Advanced-Lighting/Gamma-Correction
+  > 1.删除旧版本 react-native-cli
+  >
+  > npm uninstall -g react-native-cli
+  >
+  > 2.重新安装来自"react-native-community"的cli库 :
+  >
+  > npm i -g @react-native-community/cli
+  >
+  > 3.重新初始化项目即可:
+  >
+  > npx react-native init MyApp --template react-native-template-typescript
 
