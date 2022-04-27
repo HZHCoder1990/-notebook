@@ -72,3 +72,7 @@ git push origin master
 
 
 
+
+
+gamma 校验: https://learnopengl.com/Advanced-Lighting/Gamma-Correction
+
