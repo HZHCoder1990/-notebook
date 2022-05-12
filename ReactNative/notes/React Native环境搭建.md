@@ -151,4 +151,4 @@ pod install
   
   2. 创建RN项目时: *error This module isn't specified in a package.json file.*
   
-     <img src="/Users/mac/Desktop/github_note/-notebook/ReactNative/images/package.png" style="zoom:80%;" />
+     ![](../images/package.png)
