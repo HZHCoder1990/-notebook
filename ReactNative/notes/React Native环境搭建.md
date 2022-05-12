@@ -137,5 +137,18 @@ pod install
   yarn add 三方依赖的名称
   ```
 
-  
+- 创建默认使用TS语言的RN项目
 
+  ```shell
+  react-native init MyApp --template react-native-template-typescript
+  ```
+
+  Error总结:
+  
+  1. pod install的时候执行到Installing Flipper-Glog (0.3.6)会报错
+  
+     解决办法: Xcode --> Preferences --> Locations --> Command Line Tools，配置(选择)对于的版本
+  
+  2. 创建RN项目时: *error This module isn't specified in a package.json file.*
+  
+     <img src="/Users/mac/Desktop/github_note/-notebook/ReactNative/images/package.png" style="zoom:80%;" />
