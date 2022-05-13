@@ -158,3 +158,29 @@
   console.log(mer.name);
   ```
 
+   **const**
+
+  const记住一点就是它定义的变量是不可以再被赋值的，但是它定义的变量的内部属性是可以被修改的：
+
+        ```tsx
+        const numLivesForCat = 9;
+        const kitty = {
+            name: "Aurora",
+            numLives: numLivesForCat,
+        }
+        
+        // Error
+        kitty = {
+            name: "Danielle",
+            numLives: numLivesForCat
+        };
+        
+        // all "okay"
+        kitty.name = "Rory";
+        kitty.name = "Kitty";
+        kitty.name = "Cat";
+        kitty.numLives--;
+        ```
+
+
+
