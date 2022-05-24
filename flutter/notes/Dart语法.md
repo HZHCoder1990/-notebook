@@ -55,3 +55,73 @@ var list3 = List.filled(2, "1");
 print(list3);
 ```
 
+**Map**
+
+```dart
+var person = {
+"name": "黄先生",
+"age": 30,
+"work": ["程序员","送外卖"]
+};
+print(person["name"]);
+
+var p = new Map();
+p["name"] = "黄先生";
+
+// is 关键字的作用
+if (p is Map) {
+  print("is 关键字的作用");
+}
+```
+
+**函数的定义及可选参数**
+
+函数的定义: 
+
+```dart
+返回类型 方法名称(参数1,参数2...) { // 最好加上参数的类型进行约束
+  方法体
+  return 返回值
+}
+```
+
+函数的可选参数和具名参数
+
+```dart
+// 1. 可选参数放在具名参数的后面
+// 2.使用"[]"wrapper 可选参数
+返回类型 方法名称(参数类型 参数1,参数类型 参数2,[参数类型 可选参数1,...]) { 
+  方法体
+  return 返回值
+}
+
+返回类型 方法名称(参数类型 参数1,参数类型 参数2,{参数类型 可选参数1,...}) { 
+  方法体
+  return 返回值
+}
+
+/*******Example*********/
+void main(List<String> args) {
+   print(sum(20, 30, "黄先生"));
+   print(sum1(20, 40, name: "黄先生")); // 必须填写名称
+}
+
+String sum(int a, int b, [String? name, int age = 30]) {
+  // 可选参数可能为null
+  if (name != null) {
+    return "$a + $b" + name;
+  }
+  return "name是null";
+}
+
+String sum1(int a, int b, {String? name, int age = 30}) {
+  // 可选参数可能为null
+  if (name != null) {
+    return "$a + $b" + name;
+  }
+  return "name是null";
+}
+```
+
+**箭头函数**
+
