@@ -125,3 +125,69 @@ String sum1(int a, int b, {String? name, int age = 30}) {
 
 **箭头函数**
 
+```dart
+List list = [1, 2, 3, 5];
+list.forEach((element) {
+print(element);
+});
+// 改写成箭头函数
+list.forEach((value) => print(value));
+
+var newList = list.map((e) => e > 3 ? e * 2 : e);
+print(newList.toList());
+```
+
+箭头函数: 
+
+  1.只能写一行代码
+
+  2.如果只有一行代码可以省略"{}" 
+
+  3.如果有返回值，不要显示的写"return"
+
+**闭包Closure**
+
+```dart
+fn() {
+    var a = 123;
+    return (){
+      a ++;
+      print(a);
+    };
+  }
+// a不会被立即释放
+var b = fn();
+b();
+```
+
+**类**
+
+```dart
+// 默认构造函数
+// 命名构造函数
+class Person {
+  String? name;
+  int? age;
+  // 默认构造函数
+  // Person() {}
+
+  Person(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  // 命名构造函数
+  Person.now(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+void main(List<String> args) {
+
+  Person p = Person.now("黄先生", 30);
+  print(p.name);
+  print(p.age);
+}
+```
+
