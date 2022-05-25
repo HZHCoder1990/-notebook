@@ -37,7 +37,7 @@ to do : 王红元笔记
 var str1 = "Hello";
 String str2 = "Dart";
 
-print("$str1,$str2"); // 使用美元符号取值
+print("$str1,$str2"); // 使用美元符号取值  print("姓名: ${this.name}");
 print(str1 + str2);
 ```
 
@@ -188,6 +188,148 @@ void main(List<String> args) {
   Person p = Person.now("黄先生", 30);
   print(p.name);
   print(p.age);
+}
+```
+
+**级联语法**
+
+```dart
+p.name = "张三";
+p.age = 32;
+p.printInfo();
+
+// 使用级联语法
+p..name = "王五"
+..age = 33
+..printInfo();
+```
+
+**类的构造函数**
+
+类的构造函数不能继承
+
+```dart
+class Person {
+  String? name;
+  int? age;
+
+  Person(this.name, this.age);
+}
+
+class Student extends Person {
+  // 传入的参数传递给父类
+  Student(String name, int age): super(name, age);
+  
+}
+
+void main(List<String> args) {
+
+  Person p = Person("黄先生", 30);
+  print(p.name);
+}
+
+// 拓展子类自己的构造函数
+class Student extends Person {
+
+  String? sex;
+  // 传入的参数传递给父类
+  Student(String name, int age, String sex): super(name, age) {
+    this.sex = sex;
+  }
+}
+```
+
+```dart
+class Person {
+  String? name;
+  int? age;
+
+  Person(this.name, this.age);
+  Person.now(this.name, this.age);
+}
+
+class Student extends Person {
+
+  String? sex;
+  // 传入的参数传递给父类的命名构造函数
+  Student(String name, int age, String? sex): super.now(name, age) {
+    this.sex = sex;
+  }
+  
+}
+
+void main(List<String> args) {
+
+  Person p = Person("黄先生", 30);
+  print(p.name);
+}
+```
+
+**抽象类、接口**
+
+如果一个类使用了关键字`abstract`修饰并且只是定义了一些抽象方法，这个类可以看做接口
+
+如果一个类使用了关键字`abstract`修饰并且只是定义了一些抽象方法和方法的实现，这个类就是抽象类。
+
+```dart
+abstract class A {
+  printInfo();
+}
+
+abstract class B {
+  String? name;
+  printInfo();
+  printUserInfo() {}
+}
+```
+
+**泛型**
+
+```dart
+// 泛型方法
+T getData<T>(T value) {
+  return value;
+}
+// 泛型类
+class Person<T> {
+  T? name;
+  Person(this.name);
+}
+// 泛型接口
+abstract class Cache<T> {
+  getByKey(String key);
+  void setByKey(String key, T value);
+}
+
+class FileCache<T>implements Cache<T> {
+  @override
+  getByKey(String key) {
+    return null;
+  }
+
+  @override
+  void setByKey(String key, T value) {
+     print("具体的实现");
+  }
+}
+
+
+void main(List<String> args) {
+
+   Person person = Person<String>("哈哈");
+   print(person.name);
+   Person person1 = Person<int>(30);
+   print(person1.name);
+
+}
+```
+
+```dart
+class Person {
+
+  String? name; // 可为空
+  int age;
+  Person({this.name, required this.age}); // name可以不传，但是age是必传的
 }
 ```
 
