@@ -45,3 +45,23 @@ git stash pop
 ![](./images/3.png)
 
 修复冲突再提交即可。
+
+
+
+**Clone仓库时切分支**
+
+```shell
+git clone -b 分支名 仓库地址
+```
+
+如果直接使用 git 命令，默认分支是master
+
+```shell
+git clone 仓库地址
+```
+
+**Merge时发生冲突**
+
+当从分支A Merge 到分支B时，如果出现冲突。解决办法:
+
+1.本地先切换到分支A，2.在pull 一下分支B的代码到本地 3. 解决冲突后再push 到A即可。
