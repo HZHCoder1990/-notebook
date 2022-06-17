@@ -66,3 +66,4 @@ git clone 仓库地址
 
 1.本地先切换到分支A，2.在pull 一下分支B的代码到本地 3. 解决冲突后再push 到A即可。
 
+待研究: https://blog.csdn.net/hd243608836/article/details/107183834
