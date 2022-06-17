@@ -334,4 +334,41 @@ class Person {
 }
 ```
 
-待补充...
+**Var、Object和dynamic类型的区别**
+
+- *Var*: 如果没有初始值，可以变成任何类型
+
+```dart
+var a;
+a = "abc";
+a = 123;
+a = true;
+a = ["123"]
+```
+
+ 如果有初始值，那么其类型会被锁定
+
+```dart
+var a = "as"
+a = 123; // 报错
+```
+
+- Object: 动态任意类型， <font color=#F00>编译阶段</font>检查类型
+
+  ```dart
+  Object a = "asa"
+  a = 123;
+  a = [222];
+  ```
+
+- dynamic: 动态任意类型， <font color=#F00>编译阶段不</font>检查类型
+
+  ```dart
+  dynamic a = "asa";
+  a = 123;
+  a = [222];
+  ```
+
+- 总结: 1.`var`初始化确定类型后不可更改类型，`Object`和`dynamic`可以更改类型;2.`Object`编译阶段检查类型，而`dynamic`编译阶段不检查类型。
+
+  <img src="../images/4.png" style="zoom:50%;" />
