@@ -372,3 +372,64 @@ a = 123; // 报错
 - 总结: 1.`var`初始化确定类型后不可更改类型，`Object`和`dynamic`可以更改类型;2.`Object`编译阶段检查类型，而`dynamic`编译阶段不检查类型。
 
   <img src="../images/4.png" style="zoom:50%;" />
+
+
+
+**抽象类**
+
+`Dart` 抽象类可以只声明方法，也可以有具体的方法实现，但是不能直接用抽象类来创建实例，只能被继承使用或者充当接口。
+
+定义一个抽象类 `Animal`
+
+```dart
+abstract class Animal {
+  // 仅声明eat方法
+  void eat();
+
+  // 声明方法，且有具体实现
+  void sleep() {
+    print("睡觉");
+  }
+}
+```
+
+继承使用
+
+```dart
+class Cat extends Animal {
+  @override
+  void eat() {
+    print("喵喵吃");
+    sleep();
+  }
+
+  // 可以不实现 sleep 方法
+}
+```
+
+充当接口
+
+```dart
+class Cat implements Animal {
+  void eat() {
+    print("吃");
+  }
+
+  // 必须实现 sleep 方法
+  void sleep() {
+    print('睡');
+  }
+}
+```
+
+实例化
+
+```dart
+final animal = Animal();
+// 抽象类实例化会报错
+// Error: The class 'Test' is abstract and can't be instantiated.
+```
+
+- 抽象类不能实例化。
+- 继承: 子类比较实现抽象方法，子类可以不重写抽象类中已实现的方法。
+- 接口: 必须实现抽象类中声明的所有方法
