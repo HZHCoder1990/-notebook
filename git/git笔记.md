@@ -99,3 +99,7 @@ git commit --amend
 # 查看提交历史
 git log
 ```
+
+**Vim**
+
+vim按住o(字母)即可进入下一行并且是编辑模式
