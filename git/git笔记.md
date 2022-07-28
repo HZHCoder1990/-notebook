@@ -67,3 +67,35 @@ git clone 仓库地址
 1.本地先切换到分支A，2.在pull 一下分支B的代码到本地 3. 解决冲突后再push 到A即可。
 
 待研究: https://blog.csdn.net/hd243608836/article/details/107183834
+
+**撤回本地Commit**
+
+```ruby
+# 写完代码后，我们一般这样
+git add . //添加所有文件
+git commit -m "本功能全部完成"
+
+# 执行完commit后，想撤回commit，怎么办？
+# 可以像下面这样
+git reset --soft HEAD^
+# 这样就成功的撤销了你的commit，注意，仅仅是撤回commit操作，您写的代码仍然保留，既 git status 工作区仍然是clean的!!
+
+# HEAD^的意思是上一个版本，也可以写成HEAD~1
+# 如果你进行了2次commit，想都撤回，可以使用HEAD~2
+```
+
+几个参数的含义
+
+`--mixed` :不删除工作空间改动代码，撤销`commit`，并且撤销`git add . `操作。这个为默认参数,`git reset --mixed HEAD^ `和 `git reset HEAD^ `效果是一样的。如果执行`git status`，<font color=#F00 size=4>会显示出未提交的信息!!!</font>
+
+`--soft`: 不删除工作空间改动代码，撤销`commit`，不撤销`git add . `。
+
+`--hard`: 删除工作空间改动代码，撤销`commit`，撤销`git add . `。注意完成这个操作后，就恢复到了上一次的commit状态。如果执行`git status`，<font color=#409FFF size=4>会显示 nothing to commit, working tree clean，不会显示出未提交的信息!!!</font>
+
+*注意*: 如果只是`commit`注释写错了，只是想改一下注释，只需要执行下面命令即可
+
+```ruby
+git commit --amend
+# 查看提交历史
+git log
+```
