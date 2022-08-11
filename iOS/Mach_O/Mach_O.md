@@ -265,7 +265,7 @@ AnalysisReactiveObjC:
 install_name_tool -change @rpath/Alamofire.framework/Alamofire @executable_path/Alamofire.framework/Alamofire LXFProtocolTool_Example
 ```
 
-**通用二进制**
+**通用二进制(universal binary)**
 
 `Universal Binary`格式文件（通用二进制，也称胖二进制），实际上只是将不同架构的的 `Mach-O` 文件打包到一起，再在文件起始位置处加上 `fat_header` 结构来说明所支持的架构和偏移地址信息，其结构如下图所示：
 
@@ -306,3 +306,82 @@ struct fat_arch {
   [苹果官方源码](https://opensource.apple.com/tarballs/xnu/)
 
 - [《osx-abi-macho-file-format-reference》](https://github.com/aidansteele/osx-abi-macho-file-format-reference)
+
+
+
+**其他blog**
+
+[《iOS逆向-Mach-O文件》](https://juejin.cn/post/6844903983841214472)
+
+[《深入理解Mach-O文件中的Rebase和Bind》](https://juejin.cn/post/6896728016953540621)
+
+[《Mach-O文件结构理解》](https://jianli2017.top/wiki/IOS/MachO/MachO_FileStructure/)
+
+
+
+**Mach-O 文件补充**
+
+`Mach-O` 其实是 `Mach Object` 文件格式的缩写，是 `mac` 以及 `iOS` 上可执行文件的格式， 类似于 `windows` 上的 `PE` 格式 ( Portable Executable ) , `linux` 上的 `elf` 格式 ( Executable and Linking Format )  。它是一种用于可执行文件、目标代码、动态库的文件格式。作为 `a.out` 格式的替代，`Mach-O` 提供了更强的扩展性。
+
+但是除了可执行文件外 , 还有一些文件也是使用的 `Mach-O` 的文件格式 ：
+
+>- 目标文件(.o文件)
+>- 库文件
+>  - .a文件
+>  - .dylib
+>  - .Framework
+>- 可执行文件
+>- dyld(动态链接器)
+>- .dsym(符号表)
+
+可以使用`file`命令查看文件类型
+
+```shell
+# file 文件
+file libStaticLibraryTest.a
+```
+
+<img src="./images/8.png" style="zoom:50%;" />
+
+<font color=#CC2929>也就是说 `Mach-O` 并非一定是可执行文件 , 它是一种文件格式 。 分为 `Mach-O Object` 目标文件 、 `Mach-O ececutable` 可执行文件、 `Mach-O dynamically` 动态库文件、 `Mach-O dynamic linker` 动态链接器文件、 `Mach-O dSYM companion` 符号表文件等等 。</font>
+
+companion: 同伴
+
+<font color=#F00>**怎么修改可执行文件的架构呢(To Do)**</font>
+
+**Universal binary 通用二进制文件**
+
+> - 苹果公司提出的一种程序代码。能同时适用多种架构的二进制文件
+> - 同一个程序包中同时为多种架构提供最理想的性能
+> - 因为需要储存多种代码，通用二进制应用程序通常比单一平台二进制的程序要大
+> - 但是由于两种架构有共通的非执行资源，所以并不会达到单一版本的两倍之多
+> - 而且由于执行中只调用一部分代码，运行起来也不需要额外的内存
+
+通用二进制文件通常被称为 `Universal binary` , 在 `MachOView` 等中叫做 `Fat binary` , 这种二进制文件是可以完全拆分开来 , 或者重新组合的。
+
+**拆分 Fat binary**
+
+```shell
+# 格式: lipo macho文件名称 -thin 要拆分哪个架构 -o 拆分出来文件名
+# example
+lipo SwiftTime -thin x86_64 -o SwiftTime_x86_64
+# 查看架构
+file SwiftTime_x86_64
+# result
+SwiftTime_x86_64: Mach-O 64-bit executable x86_64
+```
+
+**合并  Fat binary**
+
+```shell
+# 存在arm64和x86_64两种架构的Mach-O文件
+lipo -create SwiftTime_arm64 SwiftTime_x86_64 -o swiftTime_Fat
+# 验证
+file swiftTime_Fat
+swiftTime_Fat: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit executable x86_64
+- Mach-O 64-bit executable x86_64] [arm64:Mach-O 64-bit executable arm64
+- Mach-O 64-bit executable arm64]
+swiftTime_Fat (for architecture x86_64):	Mach-O 64-bit executable x86_64
+swiftTime_Fat (for architecture arm64):	Mach-O 64-bit executable arm64
+```
+
