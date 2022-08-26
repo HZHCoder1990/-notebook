@@ -178,15 +178,59 @@ image list
 
   <img src="./images/18.png" style="zoom:50%;" />
 
+  使用Hopper Disassembler验证一下
+
+  <img src="./images/19.png" style="zoom:50%;" />
+
+  可以看到调用**NSLog**时是调用了 imp__stubs_NSLog指令
+
+  右键行数即可跳转到指令定义处
+
+  <img src="./images/20.png" style="zoom:50%;" />
+
+  <img src="./images/21.png" style="zoom:50%;" />
+
+  继续往下进到**_NSLog_ptr**里面
+
+  <img src="./images/22.png" style="zoom:50%;" />
+
+  和上面使用**ni**命令调试的结果是相同的。
+
+  <img src="./images/23.png" style="zoom:50%;" />
+
+  可以看到落入了 __stub_helper 中。用 Hopper 查看对应地址可以看到__stub_helper 中的指令都指向了 stub_helper 的头部，进而走向 dyld_stub_binder。
+
+  <img src="./images/24.png" style="zoom:50%;" />
+
+  进而看到 dyld_stub_binder 位于非 lazy 绑定符号指针表中
+
+  <img src="./images/25.png" style="zoom:50%;" />
+
+  
+
 - Rebase
 
   这里真实的内存虚拟地址不是0x23D4, 仅为了调试方便, xcode调试模式运行的程序, 进程起始地址固定在0x100000000, 也就是0+4GB(其中4GB是__PAGEZERO陷阱区__)。<font color=#F00 size=4>一般情况下, 由于空间随机化的存在, 在dyld加载可执行文件到内存之后, 会对所有指向进程内的符号地址进行调整, 比如0x23D4这个地址, 调整为进程头部随机化后的地址xxxx+0x23D4, 可以看出来, 因为符号_NSLog的地址需要进程被加载后才能确定， 所以被放到__DATA区, 方便修改， 修改的过程称为rebase。</font>
 
-- Bind
+- Binding(请看下面总结)
 
+**③ 总结**
 
+<font color=#409FFF size=4>首先可执行文件在调用 NSLog 等外部符号时，指令并没有与 NSLog 的实现地址进行绑定，而是利用 stub 放了桩指令，桩指令指向 la_symbol_ptr 表中；而 la_symbol_ptr 表中的指针在未绑定符号地址时，都指向 stub_helper，而 __stub_helper 作为辅助函数都指向nl_symbol_ptr 中的 dyld_stub_binder(可以理解为在编译阶段NSLog的实现地址是指向stub_helper中的)</font>
 
+如在编译时，地址**0x0000000100002490**就是一个虚拟地址，不是NSLog函数的实现地址
 
+<img src="./images/26.png" style="zoom:50%;" />
+
+<font color=#409FFF size=4>当程序执行时在第一次调用时走到 dyld_stub_binder，然后进行一个真正的符号 binding，并将 la_symbol_ptr 表中对应的符号从指向 stub_helper 修改为绑定真实调用地址，从而就实现了 lazy binding，后续调用时就会经由 stub、la_symbol_ptr 并拿到地址，不需要再走到 dyld_stub_binder中 了。</font> <font color=#F00>怎么验证不再走dyld_stub_binder??</font>
+
+当程序运行时，通过命令`image list`获取到可执行文件的ASLR地址，然后查看偏移地址所对应的值
+
+<img src="./images/27.png" style="zoom:50%;" />
+
+可以看到，NSLog函数的调用地址已经被替换成了真实地址了。
+
+**fishhook 也正是利用了这个原理，调整 la_symbol_ptr 表中的指针走向，从而实现 C 函数的 hook。**
 
 **参考资料**
 
