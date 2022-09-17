@@ -1,7 +1,7 @@
 **安装**
 
 ```yacas
- yarn add mobx mobx-react @babel/plugin-proposal-decorators
+ yarn add mobx@5.15.4 mobx-react@6.2.2 @babel/plugin-proposal-decorators@7.10.1
 ```
 
 **配置**
