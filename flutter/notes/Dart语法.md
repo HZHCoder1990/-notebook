@@ -433,3 +433,6 @@ final animal = Animal();
 - 抽象类不能实例化。
 - 继承: 子类比较实现抽象方法，子类可以不重写抽象类中已实现的方法。
 - 接口: 必须实现抽象类中声明的所有方法
+
+> [!WARNING]
+> Dangerous certain consequences of an action.
